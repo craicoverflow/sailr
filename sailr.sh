@@ -17,7 +17,7 @@ function set_config_values() {
 function build_regex() {
   set_config_values
 
-  regexp="("
+  regexp="^("
 
   if $revert; then
     regexp="${regexp}revert: )?("
