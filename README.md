@@ -33,6 +33,29 @@ make uninstall
 
 ## Usage <a name = "usage"></a>
 
-Once installed, you must run `git init` in your Git projects to (re)initialize your repository. THe next time you try to make a new commit Sailr will validate the commit message and block the commit if it fails to pass the rules in `~/.sailr/config.json`.
+Once installed, you must run `git init` in your Git projects to (re)initialize your repository. Copy the following template into the root of your project, otherwise the hook will be ignored.
 
-To make adjustments to the rules, you can just edit the configuration file located at `~/.sailr/config.json`.
+```json
+{
+    "enabled": true,
+    "revert": true,
+    "length": {
+        "min": 1,
+        "max": 52
+    },
+    "types": [
+        "build",
+        "ci",
+        "docs",
+        "feat",
+        "fix",
+        "perf",
+        "refactor",
+        "style",
+        "test",
+        "chore"
+    ]
+}
+```
+
+**Note**: you can disable Sailr in your project by setting `enabled` to false in `sailr.json`_
