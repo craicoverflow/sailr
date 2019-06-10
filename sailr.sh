@@ -23,7 +23,7 @@ function build_regex() {
   regexp="^("
 
   if $revert; then
-    regexp="${regexp}revert: )?("
+    regexp="${regexp}revert: )?(\w+)("
   fi
 
   for type in "${types[@]}"
@@ -47,9 +47,9 @@ function print_error() {
 }
 
 # get the first line of the commit message
- msg=$(head -1 $1)
+msg=$(head -1 $1)
 
- build_regex
+build_regex
 
 if [[ ! $msg =~ $regexp ]]; then
   # commit message is invalid according to config - block commit

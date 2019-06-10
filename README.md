@@ -1,13 +1,11 @@
 # Sailr
 
+Sailr helps you follow the [Conventional Commits](https://www.conventionalcommits.org) conventional by installing a configurable `commit-msg` into your Git projects.
+
 ## Table of Contents
 + [About](#about)
 + [Getting Started](#getting_started)
 + [Usage](#usage)
-
-## About <a name = "about"></a>
-
-Sailr helps you follow the [Conventional Commits](https://www.conventionalcommits.org) conventional by installing a configurable `commit-msg` into your Git projects.
 
 ### Prerequisites
 
