@@ -7,7 +7,7 @@
 
 ## About <a name = "about"></a>
 
-Sailr helps you follow the [Conventional Commits](https://www.conventionalcommits.org) conventional by installing a configurable `commit-msg` Git hook globally on you system.
+Sailr helps you follow the [Conventional Commits](https://www.conventionalcommits.org) conventional by installing a configurable `commit-msg` into your Git projects.
 
 ### Prerequisites
 
