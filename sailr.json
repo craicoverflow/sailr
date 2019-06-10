@@ -1,4 +1,5 @@
 {
+    "enabled": true,
     "revert": true,
     "length": {
         "min": 1,
