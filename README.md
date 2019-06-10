@@ -9,6 +9,10 @@
 
 Sailr helps you follow the [Conventional Commits](https://www.conventionalcommits.org) conventional by installing a configurable `commit-msg` Git hook globally on you system.
 
+### Prerequisites
+
+To use Sailr you must have [jq](https://stedolan.github.io/jq/download/) installed.
+
 ### Installing
 
 Here is how you can install Sailr.
