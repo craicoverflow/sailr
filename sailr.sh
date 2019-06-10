@@ -1,17 +1,18 @@
 #!/bin/sh
 
 function set_config_values() {
-  message_config=$HOME/.sailr/config.json
+  config=sailr.json
 
-  if [ ! -f $message_config ]; then
-    echo -e "\n\e[1m\e[31m[CONFIG FILE MISSING]"
-    exit 2
+  enabled=$(jq -r .enabled $config)
+
+  if [[ ! -f $config || ! $enabled ]]; then
+    exit 0
   fi
 
-  revert=$(jq -r .revert $message_config)
-  types=($(jq -r '.types[]' $message_config))
-  min_length=$(jq -r .length.min $message_config)
-  max_length=$(jq -r .length.max $message_config)
+  revert=$(jq -r .revert $config)
+  types=($(jq -r '.types[]' $config))
+  min_length=$(jq -r .length.min $config)
+  max_length=$(jq -r .length.max $config)
 }
 
 function build_regex() {
