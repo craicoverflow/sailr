@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# checks that jq is usable
+function check_jq_exists_and_executable {
+if ! [ -x "$(command -v jq)" ]; then
+  echo -e "\`commit-msg\` hook failed. Please install jq."
+  exit 1
+fi
+}
+
 # set values from config file to variables
 function set_config_values() {
   config=sailr.json
@@ -45,6 +53,9 @@ function print_error() {
   echo -e "\e[1mMax length (first line):\e[0m \e[34m$max_length\033[0m"
   echo -e "\e[1mMin length (first line):\e[0m \e[34m$min_length\033[0m\n"
 }
+
+# make sure jq is installed
+check_jq_exists_and_executable
 
 # get the first line of the commit message
 msg=$(head -1 $1)
