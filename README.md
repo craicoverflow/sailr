@@ -11,7 +11,7 @@ Sailr helps you follow the [Conventional Commits](https://www.conventionalcommit
 
 ### Prerequisites
 
-To use Sailr you must have [jq](https://stedolan.github.io/jq/download/) installed.
+To use Sailr, you must have [jq](https://stedolan.github.io/jq/download/) installed.
 
 ### Installing
 
