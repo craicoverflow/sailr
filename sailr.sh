@@ -8,13 +8,23 @@ if ! [ -x "$(command -v jq)" ]; then
 fi
 }
 
+# check if the config file exists
+# if it doesnt we dont need to run the hook
+function check_sailr_config {
+  config=sailr.json
+
+  if [[ ! -f $config ]]; then
+    exit 0
+  fi
+}
+
 # set values from config file to variables
 function set_config_values() {
   config=sailr.json
 
   enabled=$(jq -r .enabled $config)
 
-  if [[ ! -f $config || ! $enabled ]]; then
+  if [[ ! $enabled ]]; then
     exit 0
   fi
 
@@ -53,6 +63,9 @@ function print_error() {
   echo -e "\e[1mMax length (first line):\e[0m \e[34m$max_length\033[0m"
   echo -e "\e[1mMin length (first line):\e[0m \e[34m$min_length\033[0m\n"
 }
+
+# check if the repo has a sailr config file
+check_sailr_config
 
 # make sure jq is installed
 check_jq_exists_and_executable
