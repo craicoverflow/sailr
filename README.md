@@ -31,6 +31,17 @@ It's as simple as this:
 make uninstall
 ```
 
+### Unit Testing
+
+The unit test script is in `./tests/`.
+
+Check if the installation is correct:
+
+```sh
+cd sailr
+python ./tests/test-install.py
+```
+
 ## Usage <a name = "usage"></a>
 
 Once installed, you must run `git init` in your Git projects to (re)initialize your repository. Copy the following template into the root of your project, otherwise the hook will be ignored.
