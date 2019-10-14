@@ -1,6 +1,8 @@
 import os
 import unittest
 
+from subprocess import Popen, PIPE
+
 
 class TestInstallation(unittest.TestCase):
 
@@ -13,6 +15,14 @@ class TestInstallation(unittest.TestCase):
                         '.git-templates directory not found')
         self.assertIn('sailr.sh', os.readlink(os.path.join(self.home, '.git-templates/hooks/commit-msg')),
                       'git hook must point to sailr.sh')
+
+    def test_git_config(self):
+        process = Popen(['git', 'config', 'init.templatedir'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        output, err = process.communicate('')
+        return_code = process.returncode
+        self.assertEqual(output, b'~/.git-templates\n')
+        self.assertEqual(err, b'')
+        self.assertEqual(return_code, 0)
 
 
 if __name__ == '__main__':
