@@ -71,11 +71,12 @@ check_sailr_config
 check_jq_exists_and_executable
 
 # get the first line of the commit message
-msg=$(head -1 $1)
+INPUT_FILE=$1
+START_LINE=`head -n1 $INPUT_FILE`
 
 build_regex
 
-if [[ ! $msg =~ $regexp ]]; then
+if [[ ! $START_LINE =~ $regexp ]]; then
   # commit message is invalid according to config - block commit
   print_error
   exit 1
