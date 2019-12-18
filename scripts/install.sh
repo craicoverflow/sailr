@@ -11,6 +11,8 @@ function init {
 
     $destination="$PWD/.git/hooks"
 
+    ls $destination
+
     curl $script_file -o "$destination/commit-msg"
     chmod u+x "$destination/commit-msg"
 
