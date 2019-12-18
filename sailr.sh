@@ -1,5 +1,7 @@
 #!/bin/sh
 
+CONFIG="${SAILR_CONFIG:-$PWD/sailr.json}"
+
 # checks that jq is usable
 function check_jq_exists_and_executable {
 if ! [ -x "$(command -v jq)" ]; then
@@ -11,27 +13,23 @@ fi
 # check if the config file exists
 # if it doesnt we dont need to run the hook
 function check_sailr_config {
-  config=sailr.json
-
-  if [[ ! -f $config ]]; then
+  if [[ ! -f $CONFIG ]]; then
     exit 0
   fi
 }
 
 # set values from config file to variables
 function set_config_values() {
-  config=sailr.json
-
-  enabled=$(jq -r .enabled $config)
+  enabled=$(jq -r .enabled $CONFIG)
 
   if [[ ! $enabled ]]; then
     exit 0
   fi
 
-  revert=$(jq -r .revert $config)
-  types=($(jq -r '.types[]' $config))
-  min_length=$(jq -r .length.min $config)
-  max_length=$(jq -r .length.max $config)
+  revert=$(jq -r .revert $CONFIG)
+  types=($(jq -r '.types[]' $CONFIG))
+  min_length=$(jq -r .length.min $CONFIG)
+  max_length=$(jq -r .length.max $CONFIG)
 }
 
 # build the regex pattern based on the config file
@@ -81,3 +79,5 @@ if [[ ! $START_LINE =~ $regexp ]]; then
   print_error
   exit 1
 fi
+
+echo $SAILR_CONFIG
