@@ -1,7 +1,7 @@
 #!/bin/sh
 
 repo_url="https://github.com/craicoverflow/sailr"
-release_tag=master
+release_tag=v0.1
 script_file="https://raw.githubusercontent.com/craicoverflow/sailr/$release_tag/sailr.sh"
 
 function init {
