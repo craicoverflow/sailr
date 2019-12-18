@@ -16,7 +16,7 @@ function init {
     fi
 
     curl $script_file -o "$destination/commit-msg"
-    chmod u+x $destination
+    chmod u+x "$destination/commit-msg"
 
     if [ $global = false ]; then
         echo -e "\nInstalled Sailr \e[33mcommit-msg\033[0m hook to \e[32m$PWD\033[0m."
