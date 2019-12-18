@@ -69,4 +69,4 @@ Once installed, you must run `git init` in your Git projects to (re)initialize y
 }
 ```
 
-**Note**: you can disable Sailr in your project by setting `enabled` to false in `sailr.json`_
+**Note**: you can disable Sailr in your project by setting `enabled` to `false` in `sailr.json`.
