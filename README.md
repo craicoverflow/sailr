@@ -24,7 +24,7 @@ curl -o- https://raw.githubusercontent.com/craicoverflow/sailr/master/scripts/in
 Remove the `commit-msg` Git hook from your project:
 
 ```sh
-rm .git/hooks/commit-msg
+rm <your-project>/.git/hooks/commit-msg
 ```
 
 ## Usage <a name = "usage"></a>
