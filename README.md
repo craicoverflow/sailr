@@ -15,38 +15,23 @@ To use Sailr, you must have [jq](https://stedolan.github.io/jq/download/) instal
 
 ### Installing
 
-Here is how you can install Sailr.
-
 ```sh
-git clone https://github.com/craicoverflow/sailr
-cd sailr
-make install
+curl -o- https://raw.githubusercontent.com/craicoverflow/sailr/master/scripts/install.sh | bash
 ```
 
 ### Uninstalling
 
-It's as simple as this:
+Remove the `commit-msg` Git hook from your project:
 
 ```sh
-make uninstall
-```
-
-### Unit Testing
-
-The unit test script is in `./tests/`.
-
-Check if the installation is correct:
-
-```sh
-cd sailr
-python ./tests/test-install.py
+rm .git/hooks/commit-msg
 ```
 
 ## Usage <a name = "usage"></a>
 
 Once installed, you must run `git init` in your Git projects to (re)initialize your repository. The hook will look for a configuration file in the following locations (in order):
 
-- `SAILR_CONFIG`: You can set a custom location for your `sailr.json` config by setting the `SAILR_CONFIG` environment variable.
+- `SAILR_CONFIG`: You can set a custom location for your `sailr.json` config by setting the `SAILR_CONFIG` environment variable. Example: `SAILR_CONFIG=$HOME/.sailr/sailr.json`.
 - Your project root. Copy the following template to your desired location, otherwise the hook will be ignored.
 
 ```json
@@ -73,3 +58,14 @@ Once installed, you must run `git init` in your Git projects to (re)initialize y
 ```
 
 **Note**: you can disable Sailr in your project by setting `enabled` to `false` in `sailr.json`.
+
+### Unit Testing
+
+The unit test script is in `./tests/`.
+
+Check if the installation is correct:
+
+```sh
+cd sailr
+python ./tests/test-install.py
+```
