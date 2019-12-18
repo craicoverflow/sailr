@@ -16,7 +16,7 @@ To use Sailr, you must have [jq](https://stedolan.github.io/jq/download/) instal
 ### Installing
 
 ```sh
-curl -o- https://raw.githubusercontent.com/craicoverflow/sailr/master/scripts/install.sh | bash
+curl -o- https://raw.githubusercontent.com/craicoverflow/sailr/v0.1/scripts/install.sh | bash
 ```
 
 ### Uninstalling
