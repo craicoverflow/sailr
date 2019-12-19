@@ -1,6 +1,7 @@
 #!/bin/sh
 
-CONFIG="${SAILR_CONFIG:-$PWD/sailr.json}"
+release_tag=master
+sailr_repo="https://github.com/craicoverflow/sailr/tree/$release_tag"
 
 # checks that jq is usable
 function check_jq_exists_and_executable {
@@ -14,7 +15,18 @@ fi
 # if it doesnt we dont need to run the hook
 function check_sailr_config {
   if [[ ! -f $CONFIG ]]; then
+    echo -e "Sailr config file is missing. To set one see $sailr_repo#usage"
     exit 0
+  fi
+}
+
+function set_config {
+  local_config="$PWD/sailr.json"
+
+  if [ -f $local_config ]; then
+    CONFIG=$local_config
+  elif [ -n $SAILR_CONFIG ]; then
+    CONFIG=$SAILR_CONFIG
   fi
 }
 
@@ -62,7 +74,9 @@ function print_error() {
   echo -e "\e[1mMin length (first line):\e[0m \e[34m$min_length\033[0m\n"
 }
 
-# check if the repo has a sailr config file
+set_config
+
+# # check if the repo has a sailr config file
 check_sailr_config
 
 # make sure jq is installed
@@ -79,5 +93,3 @@ if [[ ! $START_LINE =~ $regexp ]]; then
   print_error
   exit 1
 fi
-
-echo $SAILR_CONFIG

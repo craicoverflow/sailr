@@ -31,8 +31,8 @@ rm <your-project>/.git/hooks/commit-msg
 
 Once installed, you must run `git init` in your Git projects to (re)initialize your repository. The hook will look for a configuration file in the following locations (in order):
 
-- `SAILR_CONFIG`: You can set a custom location for your `sailr.json` config by setting the `SAILR_CONFIG` environment variable. Example: `SAILR_CONFIG=$HOME/.sailr/sailr.json`.
-- Your project root. Copy the following template to your desired location, otherwise the hook will be ignored.
+1. The root of your Git project.
+2. `SAILR_CONFIG`: You can set a custom location for your `sailr.json` config by setting the `SAILR_CONFIG` environment variable. Example: `SAILR_CONFIG=$HOME/.sailr/sailr.json`.
 
 ```json
 {
