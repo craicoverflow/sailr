@@ -13,3 +13,7 @@ uninstall:
 .PHONY: update
 update:
 	git pull
+
+.PHONY: test
+test:
+	./scripts/run_unit_tests.sh
