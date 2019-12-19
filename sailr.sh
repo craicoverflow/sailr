@@ -1,6 +1,6 @@
 #!/bin/sh
 
-release_tag=master
+release_tag=v0.2
 sailr_repo="https://github.com/craicoverflow/sailr/tree/$release_tag"
 
 # checks that jq is usable
