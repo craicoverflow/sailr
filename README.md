@@ -61,11 +61,10 @@ Once installed, you must run `git init` in your Git projects to (re)initialize y
 
 ### Unit Testing
 
-The unit test script is in `./tests/`.
+Unit tests are written in Python. They are located in `./tests`
 
-Check if the installation is correct:
+To run all tests:
 
 ```sh
-cd sailr
-python ./tests/test-install.py
+make test
 ```
