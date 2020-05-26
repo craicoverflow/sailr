@@ -14,7 +14,7 @@ fi
 # check if the config file exists
 # if it doesnt we dont need to run the hook
 function check_sailr_config {
-  if [[ ! -f $CONFIG ]]; then
+  if [[ ! -f "$CONFIG" ]]; then
     echo -e "Sailr config file is missing. To set one see $sailr_repo#usage"
     exit 0
   fi
@@ -23,25 +23,25 @@ function check_sailr_config {
 function set_config {
   local_config="$PWD/sailr.json"
 
-  if [ -f $local_config ]; then
+  if [ -f "$local_config" ]; then
     CONFIG=$local_config
-  elif [ -n $SAILR_CONFIG ]; then
+  elif [ -n "$SAILR_CONFIG" ]; then
     CONFIG=$SAILR_CONFIG
   fi
 }
 
 # set values from config file to variables
 function set_config_values() {
-  enabled=$(jq -r .enabled $CONFIG)
+  enabled=$(jq -r .enabled "$CONFIG")
 
   if [[ ! $enabled ]]; then
     exit 0
   fi
 
-  revert=$(jq -r .revert $CONFIG)
-  types=($(jq -r '.types[]' $CONFIG))
-  min_length=$(jq -r .length.min $CONFIG)
-  max_length=$(jq -r .length.max $CONFIG)
+  revert=$(jq -r .revert "$CONFIG")
+  types=($(jq -r '.types[]' "$CONFIG"))
+  min_length=$(jq -r .length.min "$CONFIG")
+  max_length=$(jq -r .length.max "$CONFIG")
 }
 
 # build the regex pattern based on the config file
