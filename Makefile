@@ -17,3 +17,4 @@ update:
 .PHONY: test
 test:
 	./scripts/run_unit_tests.sh
+	./scripts/run_functional_tests.sh $$HOME/.git-templates/hooks/commit-msg
