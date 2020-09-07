@@ -1,20 +1,26 @@
 import os
 import unittest
 
-from subprocess import Popen, PIPE
 
 class TestInstallation(unittest.TestCase):
 
+    os.chdir(os.environ["HOME"])
     cwd = os.getcwd()
 
     def test_git_template(self):
-        self.assertTrue(os.path.isdir(os.path.join(self.cwd, '.git')),
-                        '.git directory not found')
-        self.assertTrue(os.path.isdir(os.path.join(self.cwd, '.git/hooks')),
-                        '.git directory not found')
-        self.assertTrue(os.path.isfile(os.path.join(self.cwd, '.git/hooks/commit-msg'))
-    )
+        self.assertTrue(
+            os.path.isdir(os.path.join(self.cwd, ".git-templates")),
+            ".git directory not found",
+        )
+        self.assertTrue(
+            os.path.isdir(os.path.join(self.cwd, ".git-templates/hooks")),
+            ".git directory not found",
+        )
+
+        self.assertTrue(
+            os.path.isfile(os.path.join(self.cwd, ".git-templates/hooks/commit-msg"))
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

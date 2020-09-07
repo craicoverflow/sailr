@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 release_tag=master
 sailr_repo="https://github.com/craicoverflow/sailr/tree/$release_tag"
@@ -48,10 +48,10 @@ function set_config_values() {
 function build_regex() {
   set_config_values
 
-  regexp="^("
+  regexp="^[.0-9]+$|"
 
   if $revert; then
-    regexp="${regexp}revert: )?(\w+)("
+      regexp="${regexp}^([Rr]evert|[Mm]erge):? )?.*$|^("
   fi
 
   for type in "${types[@]}"
@@ -64,19 +64,25 @@ function build_regex() {
   regexp="${regexp}.{$min_length,$max_length}$"
 }
 
+
 # Print out a standard error message which explains
 # how the commit message should be structured
 function print_error() {
-  echo -e "\n\e[1m\e[31m[INVALID COMMIT MESSAGE]"
+  commit_message=$1
+  regular_expression=$2
+  echo -e "\n\e[31m[Invalid Commit Message]"
   echo -e "------------------------\033[0m\e[0m"
-  echo -e "\e[1mValid types:\e[0m \e[34m${types[@]}\033[0m"
-  echo -e "\e[1mMax length (first line):\e[0m \e[34m$max_length\033[0m"
-  echo -e "\e[1mMin length (first line):\e[0m \e[34m$min_length\033[0m\n"
+  echo -e "Valid types: \e[36m${types[@]}\033[0m"
+  echo -e "Max length (first line): \e[36m$max_length\033[0m"
+  echo -e "Min length (first line): \e[36m$min_length\033[0m\n"
+  echo -e "\e[37mRegex: \e[33m$regular_expression\033[0m"
+  echo -e "\e[37mActual commit message: \e[33m\"$commit_message\"\033[0m"
+  echo -e "\e[37mActual length: \e[33m$(echo $commit_message | wc -c)\033[0m\n"
 }
 
 set_config
 
-# # check if the repo has a sailr config file
+# check if the repo has a sailr config file
 check_sailr_config
 
 # make sure jq is installed
