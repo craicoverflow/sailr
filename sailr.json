@@ -2,11 +2,12 @@
     "enabled": true,
     "revert": true,
     "length": {
-        "min": 1,
+        "min": 10,
         "max": 52
     },
     "types": [
         "build",
+        "chore",
         "ci",
         "docs",
         "feat",
@@ -14,7 +15,6 @@
         "perf",
         "refactor",
         "style",
-        "test",
-        "chore"
+        "test"
     ]
 }
