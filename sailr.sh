@@ -1,26 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env sh
+
+LIGHT_GRAY="\033[0;37m"
+YELLOW="\033[33m"
+CYAN="\033[36m"
+RED="\033[31m"
+UNDO_COLOR="\033[0m"
 
 release_tag=master
 sailr_repo="https://github.com/craicoverflow/sailr/tree/$release_tag"
 
 # checks that jq is usable
-function check_jq_exists_and_executable {
+check_jq_exists_and_executable() {
 if ! [ -x "$(command -v jq)" ]; then
-  echo -e "\`commit-msg\` hook failed. Please install jq."
+  echo "\`commit-msg\` hook failed. Please install jq."
   exit 1
 fi
 }
 
 # check if the config file exists
 # if it doesnt we dont need to run the hook
-function check_sailr_config {
+check_sailr_config() {
   if [[ ! -f "$CONFIG" ]]; then
-    echo -e "Sailr config file is missing. To set one see $sailr_repo#usage"
+    echo "Sailr config file is missing. To set one see $sailr_repo#usage"
     exit 0
   fi
 }
 
-function set_config {
+set_config() {
   local_config="$PWD/sailr.json"
 
   if [ -f "$local_config" ]; then
@@ -31,7 +37,7 @@ function set_config {
 }
 
 # set values from config file to variables
-function set_config_values() {
+set_config_values() {
   enabled=$(jq -r .enabled "$CONFIG")
 
   if [[ ! $enabled ]]; then
@@ -45,7 +51,7 @@ function set_config_values() {
 }
 
 # build the regex pattern based on the config file
-function build_regex() {
+build_regex() {
   set_config_values
 
   regexp="^[.0-9]+$|"
@@ -64,20 +70,9 @@ function build_regex() {
   regexp="${regexp}.{$min_length,$max_length}$"
 }
 
-
-# Print out a standard error message which explains
-# how the commit message should be structured
-function print_error() {
-  commit_message=$1
-  regular_expression=$2
-  echo -e "\n\e[31m[Invalid Commit Message]"
-  echo -e "------------------------\033[0m\e[0m"
-  echo -e "Valid types: \e[36m${types[@]}\033[0m"
-  echo -e "Max length (first line): \e[36m$max_length\033[0m"
-  echo -e "Min length (first line): \e[36m$min_length\033[0m\n"
-  echo -e "\e[37mRegex: \e[33m$regular_expression\033[0m"
-  echo -e "\e[37mActual commit message: \e[33m\"$commit_message\"\033[0m"
-  echo -e "\e[37mActual length: \e[33m$(echo $commit_message | wc -c)\033[0m\n"
+print_error() {
+  echo "${RED}[Invalid Commit Message]${UNDO_COLOR}"
+  echo "------------------------"
 }
 
 set_config
@@ -90,12 +85,22 @@ check_jq_exists_and_executable
 
 # get the first line of the commit message
 INPUT_FILE=$1
-START_LINE=`head -n1 $INPUT_FILE`
+commit_message=`head -n1 $INPUT_FILE`
 
 build_regex
 
-if [[ ! $START_LINE =~ $regexp ]]; then
-  # commit message is invalid according to config - block commit
+commit_msg_len=${#commit_message}
+if [[ $commit_msg_len -lt $min_length || $commit_msg_len -gt $max_length ]]; then
   print_error
+  echo "${LIGHT_GRAY}Expected length: Min=${CYAN}$min_length${UNDO_COLOR} Max=${CYAN}$max_length${UNDO_COLOR}"
+  echo "Actual length: ${YELLOW}${commit_msg_len}${UNDO_COLOR}"
+  exit 1
+fi
+
+if [[ ! $commit_message =~ $regexp ]]; then
+  print_error
+  echo "${LIGHT_GRAY}Expected prefixes: ${CYAN}${types[@]}${UNDO_COLOR}"
+  # echo "${LIGHT_GRAY}Expected Regex: ${CYAN}$regexp${UNDO_COLOR}"
+  echo "Actual commit message: ${YELLOW}\"$commit_message\"${UNDO_COLOR}"
   exit 1
 fi
